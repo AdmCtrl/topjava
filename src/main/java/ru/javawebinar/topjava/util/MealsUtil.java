@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 public class MealsUtil {
@@ -31,12 +32,13 @@ public class MealsUtil {
         System.out.println(getFilteredWithExcessByCycle(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
         System.out.println(getFilteredWithExcessInOnePass(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
         System.out.println(getFilteredWithExcessInOnePass2(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
+
     }
 
     public static List<MealTo> getFilteredWithExcess(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
-                        Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
+                        groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
 //                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
 
@@ -62,7 +64,7 @@ public class MealsUtil {
 
     public static List<MealTo> getFilteredWithExcessInOnePass(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Collection<List<Meal>> list = meals.stream()
-                .collect(Collectors.groupingBy(Meal::getDate)).values();
+                .collect(groupingBy(Meal::getDate)).values();
 
         return list.stream().flatMap(dayMeals -> {
             boolean excess = dayMeals.stream().mapToInt(Meal::getCalories).sum() > caloriesPerDay;
@@ -71,7 +73,6 @@ public class MealsUtil {
                     .map(meal -> createWithExcess(meal, excess));
         }).collect(toList());
     }
-
     public static List<MealTo> getFilteredWithExcessInOnePass2(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         final class Aggregate {
             private final List<Meal> dailyMeals = new ArrayList<>();
@@ -98,7 +99,7 @@ public class MealsUtil {
         }
 
         Collection<Stream<MealTo>> values = meals.stream()
-                .collect(Collectors.groupingBy(Meal::getDate,
+                .collect(groupingBy(Meal::getDate,
                         Collector.of(Aggregate::new, Aggregate::accumulate, Aggregate::combine, Aggregate::finisher))
                 ).values();
 
@@ -106,6 +107,8 @@ public class MealsUtil {
     }
 
     public static MealTo createWithExcess(Meal meal, boolean excess) {
-        return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+        MealTo mealTo = new  MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+        mealTo.setId(meal.getId());
+        return mealTo;
     }
 }
