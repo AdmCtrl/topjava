@@ -54,7 +54,7 @@
         buttn.value = (buttn.value.toString() == "Cancel") ? "Add Meal" : "Cancel";
         document.getElementById('addform').style.display = (buttn.value.toString() == "Cancel") ? "block" : "none";
         if (buttn.value.toString() == "Add Meal")
-            window.location = "/topjava/meals";
+            window.location = "meals";
     };
     window.onload = function () {
         buttn.value = ((${empty mealFromServlet.id})) ? "Add Meal" : "Cancel";

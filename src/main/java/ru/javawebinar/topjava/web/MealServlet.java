@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
@@ -37,7 +36,7 @@ public class MealServlet extends HttpServlet {
     );
 
     public MealServlet() {
-        mealDao.addMeal(MEAL_LIST);
+        MEAL_LIST.forEach(mealDao::add);
     }
 
     @Override
@@ -47,17 +46,17 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
         if (action != null && action.equalsIgnoreCase("delete")) {
             int id = Integer.valueOf(request.getParameter("id"));
-            mealDao.deleteMeal(id);
+            mealDao.delete(id);
             response.sendRedirect("meals");
             return;
         }
 
         if (action != null && action.equalsIgnoreCase("update")) {
             int id = Integer.valueOf(request.getParameter("id"));
-            request.setAttribute("mealFromServlet", mealDao.getMealById(id));
+            request.setAttribute("mealFromServlet", mealDao.getById(id));
         }
 
-        List<MealTo> mealWithExceeds = MealsUtil.getFilteredWithExcess(mealDao.getAllMeals(),
+        List<MealTo> mealWithExceeds = MealsUtil.getFilteredWithExcess(mealDao.getAll(),
                 LocalTime.of(0, 0), LocalTime.of(23, 59), 2000);
         request.setAttribute("mealList", mealWithExceeds);
 
@@ -79,18 +78,18 @@ public class MealServlet extends HttpServlet {
             int id = Integer.valueOf(request.getParameter("id"));
             String description = request.getParameter("name");
             int calories = Integer.valueOf(request.getParameter("calories"));
-            LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            LocalTime time = LocalTime.parse(request.getParameter("time"), DateTimeFormatter.ISO_TIME);
-            Meal meal = new Meal(LocalDateTime.of(date, time), description, calories);
+        //    LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        //    LocalTime time = LocalTime.parse(request.getParameter("time"), DateTimeFormatter.ISO_TIME);
+            Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")), description, calories);
             meal.setId(id);
-            mealDao.updateMeal(meal);
+            mealDao.update(meal);
         } else {
             String description = request.getParameter("name");
             int calories = Integer.valueOf(request.getParameter("calories"));
-            LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            LocalTime time = LocalTime.parse(request.getParameter("time"), DateTimeFormatter.ISO_TIME);
+          //  LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+          //  LocalTime time = LocalTime.parse(request.getParameter("time"), DateTimeFormatter.ISO_TIME);
 
-            mealDao.addMeal(new Meal(LocalDateTime.of(date, time), description, calories));
+            mealDao.add(new Meal(LocalDateTime.parse(request.getParameter("dateTime")), description, calories));
         }
 
         response.sendRedirect("meals");

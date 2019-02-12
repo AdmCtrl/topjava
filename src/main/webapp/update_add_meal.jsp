@@ -7,7 +7,7 @@
         <h2>Add new meal</h2>
     </c:when>
     <c:otherwise>
-        <h2>Update meal Id:${mealFromServlet.id}</h2>
+        <h2>Update meal</h2>
     </c:otherwise>
 </c:choose>
 </p>
@@ -26,12 +26,8 @@
                        value="${mealFromServlet.calories}" required/></td>
         </tr>
         <tr>
-            <td><label for="date">Date</label></td>
-            <td><input type="date" id="date" name="date" value="${mealFromServlet.dateTime.toLocalDate()}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="time">Time</label></td>
-            <td><input type="time" id="time" name="time" value="${mealFromServlet.dateTime.toLocalTime()}" required/></td>
+            <td><label for="dateTime">Date</label></td>
+            <td><input type="datetime-local" id="dateTime" name="dateTime" value="${mealFromServlet.dateTime}" required/></td>
         </tr>
     </table>
     <button type="submit">Submit</button>
