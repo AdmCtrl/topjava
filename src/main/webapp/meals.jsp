@@ -1,7 +1,8 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="/WEB-INF/utils.tld" prefix="util" %>
+<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %>
+
 <html>
 <p>
     <a href="<c:url value="/"/>">back</a>
@@ -34,7 +35,7 @@
     </thead>
     <c:forEach var="mealFromThisMealList" items="${mealList}">
         <tr style="${mealFromThisMealList.excess ? 'color: red' : 'color: green'}">
-            <td><util:date_format format="dd.MM.yyyy HH:mm">${mealFromThisMealList.dateTime}</util:date_format>
+            <td>${mealFromThisMealList.dateTime.toLocalDate()} ${mealFromThisMealList.dateTime.toLocalTime()}</td>
             </td>
             <td><c:out value="${mealFromThisMealList.description}"/>
             </td>
