@@ -7,12 +7,16 @@ public abstract class AbstractBaseEntity {
         this.id = id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public AbstractBaseEntity() {
+
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public boolean isNew() {

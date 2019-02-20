@@ -10,6 +10,10 @@ public class ValidationUtil {
         return checkNotFound(object, "id=" + id);
     }
 
+    public static <T> T checkNotFoundMeal(T object, int id, int userId) {
+        return checkNotFound(object, "id=" + id + ", userId=" + userId);
+    }
+
     public static void checkNotFoundWithId(boolean found, int id) {
         checkNotFound(found, "id=" + id);
     }
@@ -31,8 +35,7 @@ public class ValidationUtil {
         }
     }
 
-    public static void assureIdConsistent(AbstractBaseEntity entity, int id) {
-//      conservative when you reply, but accept liberally (http://stackoverflow.com/a/32728226/548473)
+    public static void checkId(AbstractBaseEntity entity, int id) {
         if (entity.isNew()) {
             entity.setId(id);
         } else if (entity.getId() != id) {

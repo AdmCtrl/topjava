@@ -10,8 +10,8 @@
     <bean class="ru.javawebinar.topjava.service.UserServiceImpl">
         <constructor-arg name="repository" ref="inmemoryUserRepository"/>
     </bean>
--->
 
+    -->
     <!-- Not necessary, already included with component-scan -->
     <!--<context:annotation-config/>-->
 
