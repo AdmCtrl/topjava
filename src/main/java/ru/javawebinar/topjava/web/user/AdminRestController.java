@@ -5,7 +5,7 @@ import ru.javawebinar.topjava.model.User;
 
 import java.util.List;
 
-@Controller
+@Controller("adminRestController")
 public class AdminRestController extends AbstractUserController {
 
     @Override

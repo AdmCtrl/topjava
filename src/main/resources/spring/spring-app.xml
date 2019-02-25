@@ -14,11 +14,32 @@
 
     <!-- Not necessary, already included with component-scan -->
     <!--<context:annotation-config/>-->
+    <!--
+           <context:component-scan base-package="ru.javawebinar.**.repository.jdbc"/>
 
-    <context:component-scan base-package="ru.javawebinar.**.repository.jdbc"/>
+       <context:component-scan base-package="ru.javawebinar.**.service"/>
 
-    <context:component-scan base-package="ru.javawebinar.**.service"/>
+          <context:component-scan base-package="ru.javawebinar.**.web"/>
+    -->
+       <bean class="ru.javawebinar.topjava.repository.jdbc.JdbcUserRepositoryImpl" id="jdbcUserRepository"/>
+       <bean class="ru.javawebinar.topjava.repository.jdbc.JdbcMealRepositoryImpl" id="jdbcMealRepository"/>
+
+       <bean class="ru.javawebinar.topjava.service.UserServiceImpl">
+           <constructor-arg name="repository" ref="jdbcUserRepository"/>
+       </bean>
+
+       <bean class="ru.javawebinar.topjava.service.MealServiceImpl">
+           <constructor-arg name="repository" ref="jdbcMealRepository"/>
+       </bean>
+
+        <!-- Not necessary, already included with component-scan -->
+    <!--<context:annotation-config/>-->
+
+    <!--context:component-scan base-package="ru.javawebinar.**.repository"/-->
+
+    <!--context:component-scan base-package="ru.javawebinar.**.service"/-->
 
     <context:component-scan base-package="ru.javawebinar.**.web"/>
+
 
 </beans>
