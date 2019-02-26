@@ -18,8 +18,7 @@ public class MealServiceImpl implements MealService {
     private final MealRepository repository;
 
     @Autowired
-    public MealServiceImpl(@Qualifier("inMemoryMealRepositoryImpl") MealRepository repository) {
-        super();
+    public MealServiceImpl(MealRepository repository) {
         this.repository = repository;
     }
 
