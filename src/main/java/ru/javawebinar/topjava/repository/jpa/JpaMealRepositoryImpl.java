@@ -41,12 +41,14 @@ public class JpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Meal get(int id, int userId) {
         Meal meal = em.find(Meal.class, id);
         return meal != null && meal.getUser().getId() == userId ? meal : null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Meal> getAll(int userId) {
         return em.createNamedQuery(Meal.GET_ALL, Meal.class)
                 .setParameter("user_id", userId)
@@ -54,6 +56,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return em.createNamedQuery(Meal.GET_BETWEEN, Meal.class)
                 .setParameter("startDate", startDate)
