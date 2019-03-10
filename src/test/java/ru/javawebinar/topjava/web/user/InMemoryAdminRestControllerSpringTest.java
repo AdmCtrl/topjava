@@ -14,7 +14,8 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Collection;
 
-import static UserTestData.ADMIN;
+import static ru.javawebinar.topjava.UserTestData.ADMIN;
+
 
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
 @RunWith(SpringRunner.class)

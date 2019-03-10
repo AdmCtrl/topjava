@@ -11,7 +11,8 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static UserTestData.ADMIN;
+import static ru.javawebinar.topjava.UserTestData.ADMIN;
+
 
 public class InMemoryAdminRestControllerTest {
     private static ConfigurableApplicationContext appCtx;
